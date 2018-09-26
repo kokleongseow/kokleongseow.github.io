@@ -1,0 +1,118 @@
+http://cs229.stanford.edu/notes/cs229-notes10.pdf
+
+http://www.cs.columbia.edu/~djhsu/coms4771-f16/lectures/slides-pca.4up.pdf
+
+https://www.quora.com/What-is-an-intuitive-explanation-for-PCA
+
+http://setosa.io/ev/principal-component-analysis/
+
+http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca
+
+https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues
+
+http://www.holehouse.org/mlclass/14_Dimensionality_Reduction.html
+
+https://www.cs.cmu.edu/%7Etom/10701_sp11/slides/DimensionalityReduction_03_29_2011_ann.pdfhttps://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6c1ae619-01be-44e6-be66-4d78070823a2
+
+Singular Value Decomposition Part 1: Perspectives on Linear Algebra
+https://www.quora.com/What-is-an-intuitive-explanation-of-singular-value-decomposition-SVD
+
+abstract
+
+Principal Components Analysis (PCA), that also tries to identify the subspace in which the data approximately lies. However, PCA will do so more directly, and will require only an eigenvector calculation.
+
+once upon a time...
+
+Vinod's answer is entirely correct. Let me try a different approach that may explain it for a more lay layman, like one without linear algebra background.
+
+For that, I think it's only possible to explain the SVD by appealing to an intuitive application of matrix factorization, like PCA. I don't know if you can explain the SVD as separate from NNMF without specialist knowledge, but you can describe a core thing it is used for.
+
+PCA can help explain observations for very many particular things in terms of very few general things, and, that matches how many things in the world work, which is useful. If I go to your CD shelf, I'll see 100 different albums, from a world of a million albums. Maybe I see John Coltrane's "A Love Supreme" and Miles Davis's "Kind of Blue". (These happen to be famous jazz albums.)
+
+However I don't believe you'd describe your musical preferences this way, by listing 100 albums. You'd likely say "I like Jazz." That's not only more efficient to say, but communicates more -- you likely have some affinity for ten thousand other Jazz records.
+
+If we didn't actually think and 'like' things in terms of genres, it'd be a lot harder to reason about tastes. Every album would be an island unto itself and say little about your preference for others. But, because we have the underlying idea of "Jazz", suddenly by knowing these are "Jazz" albums I have a world of more informed guesses about your interest in other Jazz albums like by Charles Mingus.
+
+PCA is trying to find those underlying features, "genres" in the case of music. It will find the small set of features that best explains some input -- like a list of all CDs owned by a bunch of listeners. From these user-album associations we get two outputs, user-feature associations (i.e. how much I like Jazz, Rock, R&B) and item-feature associations (i.e. how much each album is a Jazz album, a Rock album). We also get a third output saying how relatively important these are in explaining tastes.
+
+From there you can do useful things, not least of which are things like recommendation, filling in your CD shelf, with albums that this model predicts you like. You can efficiently compare albums' / users' similarity in terms of few features. You can even decide to throw out or add genres (keep more/less of S) to create a more or less nuanced model of genres.
+
+The SVD is most of the machinery that enables the above. How it operates is not possible to explain to the layman, nor maybe useful to explain. What it does (well, what PCA does) definitely can be.
+
+Principal Component Analysis
+
+Suppose we are given a dataset [latex]\{ x_1, \ldots, x_n \}[/latex] of attributes of [latex]n[/latex] different types of automobiles, such as their maximum speed, turn radius, and so on. Let [latex]x_i \in \mathbb{R}^d[/latex] for each [latex]i \ (d << n)[/latex]. But unknown to us, two different attributes gives speed measures in miles and kilometers. These two attributes are therefore linearly dependent, up to only small differences introduced by rounding off to the nearest mph or kph. Thus, the data really lies approximately on a [latex]n-1[/latex] dimensional subspace. How can we automatically detect, and perhaps remove, this redundancy?
+
+How do we compute the "major axis of variation" [latex]q[/latex] --- that is, the direction on which the data approximately lies? One way to pose this problem is as finding the unit vector [latex]q[/latex] so that when the data is projected onto the direction corresponding to [latex]q[/latex], the variance of the projected data is maximized. Intuitively, the data starts off with some amount of variance/information in it. We would like to choose a direction [latex]q[/latex] so that if we were to approximate the data as lying in the direction/subspace corresponding to [latex]q[/latex], as much as possible of this variance is still retained.
+
+To formalize this, note that given a unit vector [latex]q[/latex] and a point [latex]x[/latex], the length of the projection of [latex]x[/latex] onto [latex]q[/latex] is given by [latex]x^Tq[/latex]. I.e., if [latex]x_i[/latex] is a point in our dataset, then its projection onto [latex]q[/latex] is distance [latex]x^Tq[/latex] from the origin. Hence, to maximize the variance of the projections, we would like to choose a unit-length [latex]q[/latex] so as to maximize:
+
+[latex]\frac{1}{n}\sum_{i=1}^n (x_i^Tq)^2 = \frac{1}{n} \sum_{i=1}^n q^Tx_ix_i^Tq[/latex]
+
+[latex]=q^T(\frac{1}{n}\sum_{i=1}^nx_ix_i^T)q[/latex]
+
+We easily recognize that maximizing this subject to [latex]||q||_2=1[/latex] gives the principal eigenvector of [latex]\sum = \frac{1}{n} \sum_{i=1}^n x_i x_i^T[/latex], which is just empirical covariance matrix of the data (assuming it has zero mean).
+
+To summarize, we have found that if we wish to find a 1-dimensional subspace to approximate the fata, we should choose [latex]q[/latex] to be the principal eigenvector of [latex]\sum[/latex]. More generally, if we wish to project our data to a k-dimensional subspace (k<n), we should choose [latex]q_1, \ldots, q_k[/latex] to be the top k eigenvectors of [latex]\sum[/latex]. The [latex]q[/latex]'s now form a new, orthogonal basis for the data.
+
+How can we approximate the data using a unit-length vector [latex]q[/latex]? [latex]q[/latex] is a unit-length vector, [latex]q^Tq=1[/latex]. Red dot: The length [latex]q^Tx_i[/latex], to the axis after projecting [latex]x[/latex] onto the line defined by [latex]q[/latex]. The vector [latex](q^Tx_i)q[/latex] takes [latex]q[/latex] and stretches it to the corresponding red dot.
+
+So what's a good [latex]q[/latex]? How about minimizing the squared approximation error,
+
+[latex]q = arg min_q \sum_{i=1}^n ||x_i - qq^Tx_i||^2[/latex] subject to [latex]q^Tq=1[/latex]
+
+[latex]qq^Tx_i = (q^Tx_i)q[/latex]: The approximation of [latex]x_i[/latex] by stretching [latex]q[/latex] to the "red dot".
+
+This is related to the problem of finding the largest eigenvalue.
+
+[latex]q = arg min_q \sum_{i=1}^n ||x_i - qq^Tx_i||^2 \ \ \  s.t \ \ \ q^Tq = 1[/latex]
+
+[latex]=arg min_q \sum_{i=1}^n x_i^Tx_i - q^T(\sum_{i=1}^n x_i x_i^T)q[/latex]
+
+with [latex]\sum_{i=1}^n x_i x_i^T = XX^T[/latex]
+
+We've defined [latex]X = [x_1, \ldots, x_n][/latex]. Since the first term doesn't depend on [latex]q[/latex] and we have a negative sign in front of the second term, equivalently we solve
+
+[latex]q= argmax_q q^T(XX^T)q[/latex] subject to [latex]q^Tq = 1[/latex]
+
+This is the eigendecompostiion problem:
+
+[latex]q[/latex] is the first eqignevector of [latex]XX^T[/latex]
+
+[latex]\lambda = q^T(XX^T)q[/latex] is the first eigenvalue.
+
+Suppose A is a symmetric matrix. Show that the maximum and minimum of [latex]x^TAx[/latex] subject to the constraint [latex]x^Tx = 1[/latex] are the maximum and minimum eigenvalues of A. A symmetric implies that [latex]A^T = A[/latex] and [latex]A^{-1}A^T = 1[/latex]
+
+Let's form the Lagrangian first:
+
+[latex]\mathcal{L}(x, \lambda) = x^TAx - \lambda x^Tx - \lambda = x^T(A-\lambda I)x - \lambda[/latex]
+
+Now, if you take the derivative with respect to [latex]x[/latex], and set to zero you get:
+
+[latex]\frac{\partial}{\partial x} \mathcal{L}(x, \lambda) = \frac{\partial}{\partial x}(x^TAx - \lambda x^Tx - \lambda)=2(A-\lambda I)x = 0[/latex]
+
+[latex]Ax=\lambda x[/latex]
+
+Therefore, [latex]\lambda[/latex] should be the eigenvalue of [latex]A[/latex], and [latex]x[/latex] should be an eigenvector.
+
+Now, w.l.g (without loss of generality), let [latex]\lambda_1 \geq \lambda_2 \geq \ldots \geq \lambda_n[/latex], be the eigenvalues of [latex]A[/latex], and [latex]x_1, x_2, \ldots, x_n[/latex] be the corresponding eigenvectors, then you have:
+
+[latex]Ax_i = \lambda_i x_i[/latex]
+
+[latex]x_i^TAx_i = x_i^T\lambda_i x_i = \lambda_i x_i^T x_i = \lambda_i \times 1 = \lambda_i[/latex]
+
+Therefore, [latex]x_1^TAx_1 = \lambda_1[/latex] is the maximum achievable value, and [latex]x_n^TAx_n = \lambda_n[/latex] is the minimum.
+
+Then, to represent [latex]x^{(i)}[/latex] in this basis, we need only compute the corresponding vector:
+
+[latex]y^{(i)} = \left ( \begin{array}{c} u_1^Tx^{(i)} \\ u_2^Tx^{(i)} \\ \ldots \\ u_k^Tx^{(i)} \end{array} \right ) \in \mathbb{R}^k[/latex]
+
+Thus, whereas [latex]x^{(1)} \in \mathbb{R}^n[/latex], the vector [latex]y_{(i)}[/latex] now gives a lower, k-dimensional, approximation/representation for [latex]x^{(i)}[/latex]. PCA is therefore referred to as a dimensionality reduction algorithm. The vectors [latex]u_1, \ldots, u_k[/latex] are called the first k principal components of the data.
+
+Algorithm
+
+Example
+
+SUMMARY/DISCUSSION
+
+PYTHON CODE

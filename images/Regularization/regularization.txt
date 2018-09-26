@@ -1,0 +1,248 @@
+FOLLOW both columbia pdfs and http://ciml.info/dl/v0_9/ciml-v0_9-ch06.pdf
+
+https://www.quora.com/How-would-you-describe-LASSO-regularization-in-laymens-terms?share=1#!n=12
+
+(https://www.quora.com/What-is-an-intuitive-explanation-of-regularization)
+
+https://www.quora.com/What-is-regularization-in-machine-learninghttps://stats.stackexchange.com/questions/4961/what-is-regularization-in-plain-english\
+
+http://www.holehouse.org/mlclass/07_Regularization.html
+
+http://www.cs.columbia.edu/~djhsu/coms4771-f16/lectures/slides-reg.4up.pdf
+
+https://people.eecs.berkeley.edu/~russell/classes/cs194/f11/lectures/CS194%20Fall%202011%20Lecture%2004.pdf
+
+
+
+
+
+
+
+For example, a simple linear regression is an equation to estimate y, given a bunch of x. The equation can look as follows:
+
+[latex]y = a_1x_1 + a_2x_2 + a_3x_3 + \ldots[/latex]
+
+In the above equation, [latex]a_1, a_2, a_3[/latex] ... are the coefficients and [latex]x_1, x_2, x_3[/latex] ... are the independent variables. Given a data containing x and y, we estimate [latex]a_1, a_2, a_3 [/latex]... based of an objective function. For a linear regression the objective function is as follows:
+
+[latex]min_{f} |Y_i - f(X_i)|^2[/latex]
+
+Now, this optimization might simply overfit the equation if [latex]x_1, x_2, x_3[/latex] (independent variables) are too many in numbers. Hence we introduce a new penalty term in our objective function to find the estimates of co-efficient. Following is the modificaiton we make to the equation:
+
+[latex]min_{f \in \mathcal{H}} \sum_{i=1}^n |Y_i - f(X_i)|^2 + \lambda ||f||^2_H[/latex]
+
+The new term in the equation is the sum of squares of the coefficients (except the bias term) multiplied by the parameter [latex]\lambda[/latex]. Lambda = 0 is a super over-fit scenario and Lambda = Infinity brings down the problem to just single mean estimation. Optimizing Lambda is the task we need to solve looking at the trade-off between the prediction accuracy of training sample and prediction accuracy of the hold out sample.
+
+There are multiple ways to find the coefficients for a linear regression model. One of the widely used method is gradient descent. Gradient descent is an iterative method which takes some initial guess on coefficients and then tries to converge such that the objective function is minimized. Hence we work with partial derivatives on the coefficients. Without getting into much details of the derivation, here I will put down the final iteration equation :
+
+[latex]\theta_j := \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m (h_{\theta}(x^{(i)}) - y^{(i)})x_j^{(i)}[/latex]
+
+ Here, theta are the estimates of the coefficients. Alpha is the learning parameter which will guide our estimates to convergence. Now let’s bring in our cost terms. After taking the derivative of coefficient square, it reduces down to a linear term. Following is the final iteration equation you get after embedding the penalty/cost term:
+
+[latex]\theta_j := \theta_j (1-\alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m (h_{\theta}(x^{(i)}) - y^{(i)})x_j^{(i)}[/latex]
+
+Now if you look carefully to the equation, the starting point of every theta iteration is slightly lesser than the previous value of theta. This is the only difference between the normal gradient descent and the gradient descent regularized. This tries to find converged value of theta which is as low as possible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5 reduce architecture complexity
+The no free lunch theorem implies that we must design our machine learning algorithms to perform well on a specific task. We do so by building a set of preferences into the learning algorithm. When these preferences are aligned with the learning problems we ask the algorithm to solve, it performs better. So far, the only method of modifying a learning algorithm we have discussed is to increase or decrease the model’s capacity by adding or removing functions from the hypothesis space of solutions the learning algorithm is able to choose. We gave the specific example of increasing or decreasing the degree of a polynomial for a regression problem. The view we have described so far is oversimplified.
+a where λ is a value chosen ahead of time that controls the strength of our preference for smaller weights. When λ = 0, we impose no preference, and larger λ forces the weights to become smaller. Minimizing J(w) results in a choice of weights that make a tradeoff between fitting the training data and being small. This gives us solutions that have a smaller slope, or put weight on fewer of the features. As an example of how we can control a model’s tendency to overfit or underfit via weight decay, we can train a high-degree polynomial regression model with different values
+
+Figure 5.5: We fit a high-degree polynomial regression model to our example training set from Fig. 5.2. The true function is quadratic, but here we use only models with degree 9. We vary the amount of weight decay to prevent these high-degree models from overfitting. (Left) With very large λ, we can force the model to learn a function with no slope at all. This underfits because it can only represent a constant function. (Center) With a medium value of λ, the learning algorithm recovers a curve with the right general shape. Even though the model is capable of representing functions with much more complicated shape, weight decay has encouraged it to use a simpler function described by smaller coefficients. (Right) With weight decay approaching zero (i.e., using the Moore-Penrose pseudoinverse to solve the underdetermined problem with minimal regularization), the degree-9 polynomial overfits significantly, as we saw in Fig. 5.2.
+
+Expressing preferences for one function over another is a more general way of controlling a model’s capacity than including or excluding members from the hypothesis space. We can think of excluding a function from a hypothesis space as expressing an infinitely strong preference against that function.
+
+In our weight decay example, we expressed our preference for linear functions defined with smaller weights explicitly, via an extra term in the criterion we minimize. There are many other ways of expressing preferences for different solutions, both implicitly and explicitly. Together, these different approaches are known as regularization. Regularization is any modification we make to a learning algorithm that is intended to reduce its generalization error but not its training error.
+
+The no free lunch theorem has made it clear that there is no best machine learning algorithm, and, in particular, no best form of regularization. Instead we must choose a form of regularization that is well-suited to the particular task we want to solve. The philosophy of deep learning in general and this book in particular is that a very wide range of tasks (such as all of the intellectual tasks that people can do) may all be solved effectively using very general-purpose forms of regularization.
+
+
+
+
+
+
+
+
+
+
+
+abstract
+
+once upon a time...
+
+How do you know if the features you’ve extracted actually reflect signal rather than noise? Intuitively, you want to tell your model to play it safe, not to jump to any conclusions. This idea is called “regularization.” (The same idea is reflected in terms like “pruning”, or “shrinkage”, or “variable selection.”) To illustrate, imagine the most conservative model possible: it would make the same prediction for everyone. In a music store, for example, this means recommending the most popular album to every person, no matter what else they liked. This approach deliberately ignores both signal and noise. At the other end of the spectrum, we could build a complex, flexible model that tries to accommodate every little quirk in a customer’s data. This model would learn from both signal and noise. The problem is, if there’s too much noise in your data, the flexible model could be even worse than the conservative baseline. This is called “over-fitting”: the model is learning patterns that won’t hold up in future cases.
+
+Regularization is a way to split the difference between a flexible model and a conservative model, and this is usually calculated by adding a “penalty for complexity” which forces the model to stay simple. There are two kinds of effects that this penalty can have on a model. One effect, “selection”, is when the algorithm focuses on only a few features that contain the best signal, and discards the others. Another effect, “shrinkage”, is when the algorithm reduces each feature’s influence, so that the predictions aren’t overly reliant on any one feature in case it turns out to be noisy. There are many flavors of regularization, but the most popular one, called “LASSO”, is a simple way to combine both selection and shrinkage, and it’s probably a good default for most applications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I was visiting my grandmother on a vacation and when I entered home I was delighted to find that she was cooking her brilliant recipe. And take my word, it tasted so so brilliant. So, next day I decided to surprise her.
+I took out recipe of 30 cuisines I liked. Then I picked up all 50 ingredients required to make my special treat. All these 50 ingredients were part of 30 cuisines. Some of the ingredients appeared in all the cuisines and made me assume that larger the quantity of them the better the taste of the dish (yeah ! I was foolish). I mixed all the 50 ingredients and prayed that my final dish would be several times better than the cuisines I had picked up. Alas ! To my utter disgust the dish was a failure and my grand mom hated it.
+But, I was determined to impress my grandmother. Next time I changed my approach. I started adding ingredients in smaller quantities this time. I kept tasting the dish and became more conscious while adding more quantities of ingredients. Doing this not only I cut short on amount I added but also eliminated few of the ingredients. And guess what !? I was able to impress my grand mom with my final dish !!
+
+Consider the dish to be dependent variable, ingredients would be independent variables, quantities of ingredients would be the weights of variables, tasting of dish would be loss function, me being conscious while cooking would be regularization and my grand mom would be my test set.
+
+Regularization
+
+Regularization penalizes the weight updates of the independent variables. This way we slowly converge to the final weights and also leave behind some of the variables from the final regression equation. At the end we do not over fit the model and lot of times make some of the variables less or totally insignificant in the equation. This gives us a more loosely fitted model but works better on real/test set.
+
+Regularization is one of the methods to avoid overfitting. The basic function of regularization is to use all of the data described (meaning all of the features), but reduce their importance by setting small parameter values. This will reduce the impact of each feature.
+
+Practically, this means we want to minimize:
+
+Classification term + C x Regularization term
+
+[latex]\sum^n_{i=1}loss(y_i, f(x_i)) + C \times R(f)[/latex]
+
+We want to minimize loss, but we also want to keep the contribution of features reasonably controlled.
+
+Visually, we want to avoid high-degree polynomials. If we have a function with a lot of degrees, it will tend to overfit.
+***PIC OF HIGH DEGREE POLYNOMIAL IN COLUMBIA AI CLASS "ML BASICS"***
+
+Intuitively, regularization is the process of introducing additional information in order to solve an ill-posed problem or to prevent overfitting. This information is usually of the form of a penalty for complexity, such as restrictions for smoothness or bounds on the vector space norm.
+
+Imagine if we set some parameters of the model exactly to zero? Then a lot of the degrees would drop out, effectively lowering the dimensions and complexity of the model. Analogously, if we use shrinkage to get our parameters closer to zero (without necessarily reaching it), then we are decreasing complexity in a more continuous manner than just zeroing out those parameters.
+
+Key point: Regularization penalizes large weights!
+
+Because we want to minimize the above function, the first part gets minimized as the weights grow larger. But because we are also adding the regularized term, we also want to lower the weights. This brings about a see-saw effect and we have to find the best combo.
+
+***PIC OF SEESAW AND ANALOGY OF COMPROMISE. USE RATIONAL AND ECON. MENTION L1 AND L2*** A seesaw between low error and a simple model.
+
+If your model is too flexible, it will not only learn, during training, the general trends that you're interested in, but also the very specific peculiarities that arise in the very specific data samples that you have gathered for training purposes. This is called over-fitting.
+
+Regularization is the act of limiting the flexibility of your model so that it will not be able to learn such peculiarities, but will still be powerful enough to learn just the right amount of information.
+
+Regularization penalizes parameters for being too large and keeps them from being weighted too heavily. Typically, the penalty grows exponentially, so the larger a coefficient gets, the heavier the penalty.
+
+Regularization is used to keep your sample's idiosyncrasies from having too much influence on your model. It's a trade-off: you get a more generalized model, but it loses accuracy (in the sample/training set).
+
+
+
+
+
+In our learning objective, we had a term correspond to the zero/one loss on the training data, plus a regular whose goal was to ensure that the learned function didn't get too "crazy". (Or more formally, to ensure that the function did not overfit.)
+
+
+
+
+
+
+
+To show an actual example, let's use regularization on linear regression, called Ridge Regression.
+
+Before we continue, realize that there are many types of regularization. Some examples:
+
+encourage [latex]||w||^2_2[/latex] to be small ("ridge regression")
+
+encourage [latex]||w||_1[/latex] to be small ("Lasso")
+
+encourage [latex]w[/latex] to be sparse ("sparse regression")
+
+So for ridge regression, we want to find the [latex]w \in \mathbb{R}^d[/latex] to minimize
+
+[latex]||Aw - b||^2_2 + \lambda R(w)[/latex]
+
+where [latex]\lambda > 0[/latex] and [latex]R: \mathbb{R}^d \rightarrow R_{+}[/latex] is a penalty funciton/regularizer.
+
+How do I decide which type of regularization to use? You could try them all but it's better to just try to understand their statistical behavior in a broad class of scenarios.
+
+So, in ridge regression, we want to find [latex]w \in \mathbb{R}^d[/latex] to minimize:
+
+[latex]||Aw-b||^2_2 + \lambda||w||^2_2[/latex]
+
+where [latex]\lambda > 0[/latex]
+
+This always has a unique solution.
+
+Ridge regression objective is convex function of [latex]w[/latex].
+
+Suffices to find [latex]w[/latex] where gradient is zero.
+
+[latex]\bigtriangledown_w \{ ||Aw-b||^2_2 + \lambda ||w||^2_2 \}[/latex]
+
+[latex]=2A^T(Aw-b) + 2\lambda w[/latex]
+
+This is zero when
+
+[latex](A^TA+\lambda I)w = A^Tb[/latex],
+
+a system of linear equations in [latex]w[/latex].
+
+Matrix [latex]A^TA + \lambda I[/latex] is invertible since \lambda > 0, so its unique solution is:
+
+[latex]\widehat{w}_{ridge} := (A^TA + \lambda I)^{-1}A^T b[/latex]
+
+There is a tradeoff between squared error and penalty on [latex]w[/latex].
+
+We can write both in terms of level sets: Curves where function evalutation gives the same number. The sum of these gives a new set of levels with a unique minimum.
+
+Example
+
+SUMMARY/DISCUSSION
+
+Can't do regularizarion in valid cause when you go to training data. You're adding more data. So no need for reg yet.
+
+Suppose we are trying to select among several different models for a learning problem. For instance, we might be using a polynomial regression model [latex]h_θ(x) = g(θ_0 + θ_1x + θ_2x^2 + · · · + θ_kx^k[/latex] ), and wish to decide if k should be 0, 1, . . . , or 10. How can we automatically select a model that represents a good tradeoff between the twin evils of bias and variance?
+
+Occam’s Razor, a problem solving principle states that
+
+“Among competing hypotheses, the one with the fewest assumptions should be selected. Other, more complicated solutions may ultimately prove correct, but—in the absence of certainty—the fewer assumptions that are made, the better.”
+
+In the world of analytics, where we try to fit a curve to every pattern, Over-fitting is one of the biggest concerns. However, in general models are equipped enough to avoid over-fitting, but in general there is a manual intervention required to make sure the model does not consume more than enough attributes.
+
+Methods to avoid Over-fitting:
+
+Following are the commonly used methodologies :
+
+Cross-Validation : Cross Validation in its simplest form is a one round validation, where we leave one sample as in-time validation and rest for training the model. But for keeping lower variance a higher fold cross validation is preferred.
+Early Stopping : Early stopping rules provide guidance as to how many iterations can be run before the learner begins to over-fit.
+Pruning : Pruning is used extensively while building CART models. It simply removes the nodes which add little predictive power for the problem in hand.
+Regularization : This is the technique we are going to discuss in more details. Simply put, it introduces a cost term for bringing in more features with the objective function. Hence, it tries to push the coefficients for many variables to zero and hence reduce cost term.
+PYTHON CODE
+
+COMING SOON...
+
+[wpforms id="1712"]

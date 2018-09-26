@@ -1,0 +1,284 @@
+
+https://www.youtube.com/watch?v=F1ka6a13S9I
+
+FOLLOW http://scott.fortmann-roe.com/docs/BiasVariance.html
+
+& https://elitedatascience.com/bias-variance-tradeoff
+
+
+
+https://stats.stackexchange.com/questions/4284/intuitive-explanation-of-the-bias-variance-tradeoff
+
+For a more rigourous explanaiotn of how overrating/underffitng corresponds to bias/variance, see http://work.caltech.edu/slides/slides11.pdf and http://work.caltech.edu/slides/slides08.pdf
+
+https://www.quora.com/What-is-an-intuitive-explanation-for-bias-variance-tradeoff
+
+https://www.quora.com/What-is-an-intuitive-explanation-of-over-fitting-particularly-with-a-small-sample-set-What-are-you-essentially-doing-by-over-fitting-How-does-the-over-promise-of-a-high-R²-low-standard-error-occur
+
+
+
+
+
+
+
+Methods to avoid Over-fitting:
+
+Following are the commonly used methodologies :
+
+Cross-Validation : Cross Validation in its simplest form is a one round validation, where we leave one sample as in-time validation and rest for training the model. But for keeping lower variance a higher fold cross validation is preferred.
+Early Stopping : Early stopping rules provide guidance as to how many iterations can be run before the learner begins to over-fit.
+Pruning : Pruning is used extensively while building CART models. It simply removes the nodes which add little predictive power for the problem in hand.
+Regularization : This is the technique we are going to discuss in more details. Simply put, it introduces a cost term for bringing in more features with the objective function. Hence, it tries to push the coefficients for many variables to zero and hence reduce cost term.
+
+
+In other words, what’s has been learned from the training set does not generalize well to other houses. The generalization error (which will be made formal shortly) of a hypothesis is its expected error on examples not necessarily in the training set.
+
+Informally, we define the bias of a model to be the expected generalization error even if we were to fit it to a very (say, infinitely) large training set. Thus, for the problem above, the linear model suffers from large bias, and may underfit (i.e., fail to capture structure exhibited by) the data. Apart from bias, there’s a second component to the generalization error, consisting of the variance of a model fitting procedure. Specifically, when fitting a 5th order polynomial as in the rightmost figure, there is a large risk that we’re fitting patterns in the data that happened to be present in our small, finite training set, but that do not reflect the wider pattern of the relationship between x and y. This could be, say, because in the training set we just happened by chance to get a slightly more-expensive-than-average house here, and a slightly less-expensive-than-average house there, and so on. By fitting these “spurious” patterns in the training set, we might again obtain a model with large generalization error. In this case, we say the model has large variance
+
+Often, there is a tradeoff between bias and variance. If our model is too “simple” and has very few parameters, then it may have large bias (but small variance); if it is too “complex” and has very many parameters, then it may suffer from large variance (but have smaller bias). In the example above, fitting a quadratic function does better than either of the extremes of a first or a fifth order polynomial
+
+
+
+To recap, if we have too many features then the learned hypothesis may give a cost function of exactly zero. But this tries too hard to fit the training set. Fails to provide a general solution - unable to generalize (apply to new examples).
+
+
+
+To prevent under-fitting we need to make sure that: 1. The network has enough hidden units to represent the required mappings. 2. The network is trained for long enough that the error/cost function (e.g., SSE or Cross Entropy) is sufficiently minimised. To prevent over-fitting we have several options: 1. Restrict the number of adjustable parameters the network has – e.g. by reducing the number of hidden units, or by forcing connections to share the same weight values. 2. Stop the training early – before it has had time to learn the training data too well. 3. Add some form of regularization term to the error/cost function to encourage smoother network mappings. 4. Add noise to the training patterns to smear out the data points.
+
+
+
+It is helpful to think about what we are asking our neural networks to cope with when they generalize to deal with unseen input data. There are a few recurring factors: 1. Empirically determined data points will usually contain a certain level of noise, e.g. incorrect class labels or measured values that are inaccurate. 2. In most cases, the underlying “correct” decision boundary or function will be smoother than that indicated by a given set of noisy training data. 3. If we had an infinite number of data points, the errors and inaccuracies would be easier to spot and tend to cancel out of averages. 4. Different sets of training data, i.e. different sub-sets of the infinite set of all possible training data, will lead to different network weights and outputs. The key question is: how can we recover the best smooth underlying function or decision boundary from a given set of noisy training data?
+
+
+
+
+
+Bias-Variance Tradeoff has simple, practical implications around model complexity, over-fitting, and under-fitting. Bias occurs when an also has limited flexibility to learn the true signal from a dataset. Variance refers to an alto's sensitivity to specific sets of training data.
+
+Low variance algos tend to be less complex, which simple or rigid underlying structure. e.g. regression, naive bayes, linear algos, parametric algos.
+
+low bias algos tend to be more complex, with flexible underlying structure. e.g. decision trees, nearest neighbors, non-linear algos, non-parametric algos.
+
+Within each also family, there's a tradeoff too... For example, regression can be regularized to further reduce complexity. Decision trees can be pruned to reduce complexity.
+
+Algos not complex enough produce underfit models that can't learn the signal from the data. Algos that are too complex produce overfit models that memorize the noise instead of the signal. Good predictions come from a balance of bias and variance that minimizes total error.
+
+There are 3 types of prediction error: bias, variance, and irreducible error.
+
+Irreducible error is also known as "noise," and it can't be reduced by your choice in algorithm. It typically comes from inherent randomness, a mis-framed problem, or an incomplete feature set.
+
+The other two types of errors, however, can be reduced because they stem from your algorithm choice.
+
+Bias is the difference between your model's expected predictions and the true values.
+
+That might sound strange because shouldn't you "expect" your predictions to be close to the true values? Well, it's not always that easy because some algorithms are simply too rigid to learn complex signals from the dataset.
+
+Variance refers to your algorithm's sensitivity to specific sets of training data.
+
+High variance algorithms will produce drastically different models depending on the training set.
+
+For example, imagine an algorithm that fits a completely unconstrained, super-flexible model to the same dataset from above:
+
+As you can see, this unconstrained model has basically memorized the training set, including all of the noise. This is known as over-fitting.
+
+A proper machine learning workflow includes:
+
+Separate training and test sets
+Trying appropriate algorithms (No Free Lunch)
+Fitting model parameters
+Tuning impactful hyperparameters
+Proper performance metrics
+Systematic cross-validation
+The irreducible error cannot be reduced regardless of what algorithm is used. It is the error introduced from the chosen framing of the problem and may be caused by factors like unknown variables that influence the mapping of the input variables to the output variable.
+
+Generally, parametric algorithms have a high bias making them fast to learn and easier to understand but generally less flexible. In turn, they have lower predictive performance on complex problems that fail to meet the simplifying assumptions of the algorithms bias.
+
+Low Bias: Suggests less assumptions about the form of the target function.
+High-Bias: Suggests more assumptions about the form of the target function.
+Examples of low-bias machine learning algorithms include: Decision Trees, k-Nearest Neighbors and Support Vector Machines.
+
+Examples of high-bias machine learning algorithms include: Linear Regression, Linear Discriminant Analysis and Logistic Regression.
+
+Variance is the amount that the estimate of the target function will change if different training data was used.
+
+The target function is estimated from the training data by a machine learning algorithm, so we should expect the algorithm to have some variance. Ideally, it should not change too much from one training dataset to the next, meaning that the algorithm is good at picking out the hidden underlying mapping between the inputs and the output variables.
+
+Machine learning algorithms that have a high variance are strongly influenced by the specifics of the training data. This means that the specifics of the training have influences the number and types of parameters used to characterize the mapping function.
+
+Low Variance: Suggests small changes to the estimate of the target function with changes to the training dataset.
+High Variance: Suggests large changes to the estimate of the target function with changes to the training dataset.
+Generally, nonparametric machine learning algorithms that have a lot of flexibility have a high variance. For example, decision trees have a high variance, that is even higher if the trees are not pruned before use.
+
+Examples of low-variance machine learning algorithms include: Linear Regression, Linear Discriminant Analysis and Logistic Regression.
+
+Examples of high-variance machine learning algorithms include: Decision Trees, k-Nearest Neighbors and Support Vector Machines.
+
+You can see a general trend in the examples above:
+
+Parametric or linear machine learning algorithms often have a high bias but a low variance.
+Non-parametric or non-linear machine learning algorithms often have a low bias but a high variance.
+The parameterization of machine learning algorithms is often a battle to balance out bias and variance.
+
+Below are two examples of configuring the bias-variance trade-off for specific algorithms:
+
+The k-nearest neighbors algorithm has low bias and high variance, but the trade-off can be changed by increasing the value of k which increases the number of neighbors that contribute t the prediction and in turn increases the bias of the model.
+The support vector machine algorithm has low bias and high variance, but the trade-off can be changed by increasing the C parameter that influences the number of violations of the margin allowed in the training data which increases the bias but decreases the variance.
+
+
+Using a simple flawed Presidential election survey as an example, errors in the survey are then explained through the twin lenses of bias and variance: selecting survey participants from a phonebook is a source of bias; a small sample size is a source of variance; minimizing total model error relies on the balancing of bias and variance errors.
+
+
+
+Of course, with cross-validation, the number of folds to use (k-fold cross-validation, right?), the value of k is an important decision. The lower the value, the higher the bias in the error estimates and the less variance. Conversely, when k is set equal to the number of instances, the error estimate is then very low in bias but has the possibility of high variance. The bias-variance tradeoff is clearly important to understand for even the most routine of statistical evaluation methods, such as k-fold cross-validation.
+
+
+
+We see that the linear (degree = 1) fit is an under-fit:
+1) It does not take into account all the information in the data (high bias), but
+2) It will not change much in the face of a new set of points from the same source (low variance).
+
+The high degree polynomial (degree = 20) fit, on the other hand, is an over-fit:
+1) The curve fits the given data points very well (low bias), but
+2) It will collapse in the face of subsets or new sets of points from the same source because it intimately takes all the data into account, thus losing generality (high variance).
+
+The ideal fit, naturally, is one that captures the regularities in the data enough to be reasonably accurate and generalizable to a different set of points from the same source. Unfortunately
+
+
+
+Let's say you are considering catastrophic health insurance, and there is a 1% probability of getting sick which would cost 1 million dollars. The expected cost of getting sick is thus 10,000 dollars. The insurance company, wanting to make a profit, will charge you 15,000 for the policy.
+
+Buying the policy gives an expected cost to you of 15,000, which has a variance of 0 but can be thought of as biased since it is 5,000 more than the real expected cost of getting sick.
+
+Not buying the policy gives an expected cost of 10,000, which is unbiased since it is equal to the true expected cost of getting sick, but has a very high variance. The tradeoff here is between an approach that is consistently wrong but never by much and an approach that is correct on average but is more variable.
+
+On the right-hand side, there are three terms: the first of these is just the irreducible error (the variance in the data itself); this is beyond our control so ignore it. The second term is the square of the bias; and the third is the variance. It's easy to see that as one goes up the other goes down--they can't both vary together in the same direction. Put another way, you can think of least-squares regression as (implicitly) finding the optimal combination of bias and variance from among candidate models.
+
+
+
+Most of supervised machine learning can be looked at using the following framework: You have a set of training points (xi,yi)(xi,yi), and you want to find a function ff that "fits the data well", that is, yi≈f(xi)yi≈f(xi) for most ii. This function needs to be chosen carefully - if it is too simple, yi≈f(xi)yi≈f(xi) may not hold for many values of ii; if it is too complex, it will fit the data very well (maybe even perfectly) but will not do well on unseen data.
+
+The way you set this complexity of the chosen function is as follows: Choose a class of functions F the complexity of which is easier to control, and then find the function f∈f∈F that does best on the training data. So the problem of controlling the complexity of ff has been reduced to the problem of controlling the complexity of F. Now since there is no direct way to find the optimal F, you try a bunch of function classes 1,…,kF1,…,Fk, and choose the one that does best on unseen data. These classes 1,…,kF1,…,Fk are parameterized by quantities called hyperparameters, and the process of choosing the best class is called hyperparameter optimization.
+
+When you use machine learning to build your model, you are essentially just looking for the parameters that will make your algorithm great, i.e. the number of weights to use.
+
+Once you have built a model with your training data, you then have to test your model with a testing dataset to see how accurate your algorithm is. Before using your algorithm in practice, you want to make sure that it will accurately predict what you need. The only way to achieve that is by using a testing set to feed into your algorithm to see how accurate it is. The training error does not show how accurate the algorithm is, because the model you are using was built off of the training set, so naturally, the training error should be near zero.
+
+For example, once you have built your model with the training set, meaning you have all the parameters. You use those same parameters/model, and feed your testing data into it. Recall, that your parameters/model was created based off of the training data. So a separate set of data (testing data) that your model has never seen, is needed to test how accurate it is.
+
+What happens if your model is too complicated and follows your training data to precisely? That is called overfitting or high variance (low bias). For instance, in the Amazon example, if you only had 5 customers, and you fit your model too closely to those 5 customers, you are at high risk of the algorithm only noticing other customers EXACTLY like those 5.
+
+You can prevent overfitting with CV, more examples, and regularization.
+
+But what happens if your model is too simple? That is called underfitting or high bias (low variance). Then your algorithm will also perform poorly because it did not capture the properties and patterns it needed. To counteract this, make your model more complicated by adding more features (features like weight).
+
+For example, in our amazon example, instead of having 5 features, what if we only took one feature. Let's say we chose income. Thats too simple of a model.
+5 ways to stop overfitting.
+1. Add more data.
+2. Use data augmentation.
+3. Use architectures that generalize well.
+4. Add regularization - Like dropout. Regularization is basically add up all of your weights, and multiply it by some small number, and add it to your loss function. Basically saying having higher weights is bad. L2 - square of weights and add up. L1 - absolute of weights and add.
+5. Reduce architecture complexity
+
+Of course, when we use a machine learning algorithm, we do not fix the parameters ahead of time, then sample both datasets. We sample the training set, then use it to choose the parameters to reduce training set error, then sample the test set. Under this process, the expected test error is greater than or equal to the expected value of training error. The factors determining how well a machine learning algorithm will perform are its ability to: 1. Make the training error small. 2. Make the gap between training and test error small. These two factors correspond to the two central challenges in machine learning: underfitting and overfitting. Underfitting occurs when the model is not able to obtain a sufficiently low error value on the training set. Overfitting occurs when the gap between the training error and test error is too large.
+We can control whether a model is more likely to overfit or underfit by altering its capacity. Informally, a model’s capacity is its ability to fit a wide variety of functions. Models with low capacity may struggle to fit the training set. Models with high capacity can overfit by memorizing properties of the training set that do not serve them well on the test set.
+
+The central challenge in machine learning is that we must perform well on new, previously unseen inputs—not just those on which our model was trained. The ability to perform well on previously unobserved inputs is called generalization.
+
+One way to control the capacity of a learning algorithm is by choosing its hypothesis space, the set of functions that the learning algorithm is allowed to select as being the solution. For example, the linear regression algorithm has the set of all linear functions of its input as its hypothesis space. We can generalize linear regression to include polynomials, rather than just linear functions, in its hypothesis space. Doing so increases the model’s capacity.
+
+Though this model implements a quadratic function of its input, the output is still a linear function of the parameters, so we can still use the normal equations to train the model in closed form. We can continue to add more powers of x as additional features, for example to obtain a polynomial of degree 9
+
+There are in fact many ways of changing a model’s capacity. Capacity is not determined only by the choice of model. The model specifies which family of functions the learning algorithm can choose from when varying the parameters in order to reduce a training objective. This is called the representational capacity of the model.
+PARAMETRIC
+To reach the most extreme case of arbitrarily high capacity, we introduce the concept of non-parametric models. So far, we have seen only parametric models, such as linear regression. Parametric models learn a function described by a parameter vector whose size is finite and fixed before any data is observed. Non-parametric models have no such limitation. Sometimes, non-parametric models are just theoretical abstractions (such as an algorithm that searches over all possible probability distributions) that cannot be implemented in practice.
+
+Finally, we can also create a non-parametric learning algorithm by wrapping a parametric learning algorithm inside another algorithm that increases the number of parameters as needed. For example, we could imagine an outer loop of learning that changes the degree of the polynomial learned by linear regression on top of a polynomial expansion of the input.
+The field of statistics gives us many tools that can be used to achieve the machine learning goal of solving a task not only on the training set but also to generalize.
+Foundational concepts such as parameter estimation, bias and variance are useful to formally characterize notions of generalization, underfitting and overfitting.
+Point estimation is the attempt to provide the single “best” prediction of some quantity of interest. In general the quantity of interest can be a single parameter or a vector of parameters in some parametric model, such as the weights in our linear regression example in Sec. 5.1.4, but it can also be a whole function.
+
+Another property of the estimator that we might want to consider is how much we expect it to vary as a function of the data sample. Just as we computed the expectation of the estimator to determine its bias, we can compute its variance.
+The variance or the standard error of an estimator provides a measure of how we would expect the estimate we compute from data to vary as we independently resample the dataset from the underlying data generating process. Just as we might like an estimator to exhibit low bias we would also like it to have relatively low variance.
+
+
+
+
+
+You're given a small dataset. Now your job is to estimate the underlying model. As in, if an unknown point comes in, you should to be able to fit it into your model. Typical supervised learning stuff! But the problem is that you have very few datapoints to begin with. So how do we accurately estimate that model? Should you really tighten your model to satisfy every single point you have?
+
+As seen in the image here, you are given a bunch of points. Your job is to come up with that underlying curve. In machine learning, overfitting occurs when a learning model customizes itself too much to describe the relationship between training data and the labels. Overfitting tends to make the model very complex by having too many parameters. By doing this, it loses its generalization power, which leads to poor performance on new data.
+
+The reason this happens is because we use different criteria to train the model and then test its efficiency. As we know, a model is trained by maximizing its accuracy on the training dataset. But its performance is determined on its ability to perform well on unknown data. In this situation, overfitting occurs when our model tries to memorize the training data as opposed to try to generalize from patterns observed in the training data.
+
+One way to avoid overfitting is to use a lot of data. The main reason overfitting happens is because you have a small dataset and you try to learn from it. The algorithm will have greater control over this small dataset and it will make sure it satisfies all the datapoints exactly. But if you have a large number of datapoints, then the algorithm is forced to generalize and come up with a good model that suits most of the points.
+
+Overfitting occurs when a statistical model or machine learning algorithm captures the noise of the data.  Intuitively, overfitting occurs when the model or the algorithm fits the data too well.  Specifically, overfitting occurs if the model or algorithm shows low bias but high variance.  Overfitting is often a result of an excessively complicated model, and it can be prevented by fitting multiple models and using validation or cross-validation to compare their predictive accuracies on test data.
+
+Underfitting occurs when a statistical model or machine learning algorithm cannot capture the underlying trend of the data.  Intuitively, underfitting occurs when the model or the algorithm does not fit the data well enough.  Specifically, underfitting occurs if the model or algorithm shows low variance but high bias.  Underfitting is often a result of an excessively simple model.
+
+Both overfitting and underfitting lead to poor predictions on new data sets.
+
+
+
+
+
+
+
+
+
+
+
+abstract
+
+In statistics and machine learning, the bias-variance tradeoff (or dilemma) is the problem of simultaneously minimizing two sources of error that prevent supervised learning algorithms from generalizing beyond their training set. High bias can cause an algorithm to miss the relevant relations between features and target output (underfitting). High variance, on the other hand, can cause an algorithm to model the random noise in the training data, rather than the intended outputs.
+
+once upon a time...
+
+BIAS-VARIANCE
+
+When we discuss prediction models, prediction errors can be decomposed into two main subcomponents we care about: error due to "bias" and error due to "variance". There is a tradeoff between a model's ability to minimize bias and variance. Understanding these two types of error can help us diagnose model results and avoid the mistake of over- or under-fitting.
+
+The bias-variance decomposition is a way of analyzing a learning algorithm's expected generalization error with respect to a particular problem as a sum of three terms, the bias, variance, and a quantity called the irreducible error, resulting from noise in the problem itself. This tradeoff applies to all forms of supervised learning.
+
+Understanding how different sources of error lead to bias and variance helps us improve the data fitting process resulting in more accurate models.
+
+Error due to Bias: The error due to bias is taken as the difference between the expected (or average) prediction of our model and the correct value which we are trying to predict. Of course you only have one model so talking about expected or average prediction values might seem a little strange. However, imagine you could repeat the whole model building process more than once: each time you gather new data and run a new analysis creating a new model. Due to randomness in the underlying data sets, the resulting models will have a range of predictions. Bias measures how far off in general these models' predictions are from the correct value.
+Error due to Variance: The error due to variance is taken as the variability of a model prediction for a given data point. Again, imagine you can repeat the entire model building process multiple times. The variance is how much the predictions for a given point vary between different realizations of the model.
+We can also think of bias-variance graphically. Imagine that the center of the target is a model that perfectly predicts the correct values. As we move away from the bulls-eye, our predictions get worse and worse. Imagine we can repeat our entire model building process to get a number of separate hits on the target. Each hit represents an individual realization of our model, given the chance variability in the training data we gather. Sometimes we will get a good distribution of training data so we predict very well and we are close to the bulls-eye, while sometimes our training data might be full of outliers or non-standard values resulting in poorer predictions. These different realizations result in a scatter of hits on the target.
+
+***PIC OF BULLSEYES***
+
+We can also define everything mathematically. If we denote the variable we are trying to predict as [latex]Y[/latex] and our covariates as [latex]X[/latex], we may assume that there is a relationship relating one to the other such as = [latex]Y = f(X) + \epsilon [/latex] where the error term [latex]\epsilon[/latex] is normally distributed with a mean of zero like so [latex]\epsilon ~ \mathcal{N}(0, \sigma_{\epsilon}) [/latex].
+
+We may estimate a model [latex]\widehat{f}(x)[/latex] of [latex]f(x)[/latex] using linear regressions or another modeling technique. In this case, the expected squared prediction error at a point [latex]x[/latex] is:
+
+[latex]Err(x) = E[(Y-\widehat{f}(x))^2][/latex]
+
+This error may be then decomposed into bias and variance components:
+
+[latex]Err(x) = (E[\widehat{f}(x)]-f(x))^2 + E[\widehat{f}(x) - E[\widehat{f}(x)]^2]+ \sigma^2_{\epsilon}}[/latex]
+
+[latex]Err(x) = Bias^2 + Variance + Irreducible \ Error[/latex]
+
+The full derivation of this is shown here: https://robjhyndman.com/hyndsight/bias-variance/
+
+That third term, irreducible error, is the noise term in the true relationship that cannot fundamentally be reduced by any model. Given the true model and infinite data to calibrate it, we should be able to reduce both the bias and variance terms to 0. However, in a world with imperfect models and finite data, there is a tradeoff between minimizing the bias and minimizing the variance.
+
+At its root, dealing with bias and variance is really about dealing with over- and under-fitting. Bias is reduced and variance is increased in relation to model complexity. As more and more parameters are added to a model, the complexity of the model rises and variance becomes our primary concern while bias steadily falls. For example, as more polynomial terms are added to a linear regression, the greater the resulting model's complexity will be 3. In other words, bias has a negative first-order derivative in response to model complexity 4 while variance has a positive slope.
+
+Example
+
+SUMMARY/DISCUSSION
+
+Recall that there is a difference in SRM & ERM. Both can be over and underfit.
+
+http://www.svms.org/srm/
+
+PYTHON CODE
+
+COMING SOON...
+
+[wpforms id="1712"]
+
+
+

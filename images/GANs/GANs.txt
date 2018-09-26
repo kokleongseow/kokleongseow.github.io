@@ -1,0 +1,32 @@
+***** ABSTRACT *****
+
+
+
+
+
+***** ONCE UPON A TIME *****
+
+
+
+
+***** “GANs” *****
+
+https://blog.openai.com/generative-models/
+
+https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch-e81b79659e3f
+
+http://kvfrans.com/generative-adversial-networks-explained/
+
+
+***** ALGORITHM *****
+
+https://www.analyticsvidhya.com/blog/2017/06/introductory-generative-adversarial-networks-gans/
+
+
+***** EXAMPLE *****
+http://blog.aylien.com/introduction-generative-adversarial-networks-code-tensorflow/
+http://blog.evjang.com/2016/06/generative-adversarial-nets-in.html
+https://medium.com/@ageitgey/abusing-generative-adversarial-networks-to-make-8-bit-pixel-art-e45d9b96cee7
+
+
+***** SUMMARY *****

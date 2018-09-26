@@ -1,0 +1,29 @@
+# Dependencies
+plugins: [jekyll-paginate, jekyll-gist]
+#markdown:         redcarpet
+markdown:         kramdown
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+#relative_permalinks: true
+
+# Setup
+title:            KSEOW
+tagline:          'Machine Learning Made Easy'
+description:      "Breaking Down Machine Learning"
+url:              https://kokleongseow.github.io/
+baseurl:          
+
+author:
+  name:           'Mark Otto'
+  url:            https://twitter.com/mdo
+
+paginate:         5
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/poole/hyde
+highlighter: rouge

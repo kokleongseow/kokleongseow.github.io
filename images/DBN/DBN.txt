@@ -1,0 +1,158 @@
+***** ABSTRACT *****
+(https://www.youtube.com/watch?v=E2Mt_7qked0)
+RBM can extract features and reconstruct input.
+It helps with vanishing gradient. Combine them together and you get DBN. 
+
+DBN structure = MLP structure, but training is completely different.
+
+https://www.quora.com/Whats-the-difference-between-RBM-DBM-and-DBN
+
+
+***** ONCE UPON A TIME *****
+Vanishing gradient (https://www.quora.com/How-does-Deep-Belief-Network-solve-the-vanishing-gradient-problem)
+
+https://www.quora.com/Whats-the-difference-between-RBM-DBM-and-DBN
+A DBN is a deep belief network which are basically stacked RBMs which are trained layerwise.
+
+https://codeburst.io/deep-learning-deep-belief-network-fundamentals-d0dcfd80d7d4
+
+***** “DBN” *****
+http://helper.ipam.ucla.edu/publications/gss2012/gss2012_10596.pdf
+https://www.toptal.com/machine-learning/an-introduction-to-deep-learning-from-perceptrons-to-deep-networks
+http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/
+http://deeplearning.net/tutorial/rbm.html
+http://deeplearning.net/tutorial/DBN.html
+
+(https://deeplearning4j.org/restrictedboltzmannmachine)
+RBM: overcomes vanishing gradient problem.
+This is a method that can automatically find patterns in our data by reconstructing the input. 
+RBM is a shallow, two-layer net; the first layer is known as the visible layer and the second is hidden.
+An RBM is considered “restricted” because no two nodes in the same layer share a connection.
+Imagine for a second an RBM that was only fed images of elephants and dogs, and which had only two output nodes, one for each animal. The question the RBM is asking itself on the forward pass is: Given these pixels, should my weights send a stronger signal to the elephant node or the dog node? And the question the RBM asks on the backward pass is: Given an elephant, which distribution of pixels should I expect?
+That’s joint probability: the simultaneous probability of x given a and of a given x, expressed as the shared weights between the two layers of the RBM.
+The process of learning reconstructions is, in a sense, learning which groups of pixels tend to co-occur for a given set of images. The activations produced by nodes of hidden layers deep in the network represent significant co-occurrences; e.g. “nonlinear gray tube + big, floppy ears + wrinkles” might be one.
+
+In the backward pass, it takes this set of numbers and translates them back to form the re-constructed inputs. A well-trained net will be able to perform the backwards translation with a high degree of accuracy. In both steps, the weights and biases have a very important role. They allow the RBM to decipher the interrelationships among the input features, and they also help the RBM decide which input features are the most important when detecting patterns. 
+
+An RBM automatically sorts through the data, and by properly adjusting the weights and biases, an RBM is able to extract the important features and reconstruct the input. It’s actually making decisions about which input features are important and how they should be combined to form patterns. 
+
+(http://www.cs.toronto.edu/~hinton/absps/guideTR.pdf) - RBM training.
+1 - consider the problem of learning a model (RBM) as a minimization of the distance between the parametric pdf of the RBM and the underlying dataset distribution.
+2 - compute the gradient of the distance so that you can do gradient descent
+https://stats.stackexchange.com/questions/113395/how-to-derive-the-gradient-formula-for-the-maximum-likelihood-in-rbm/196826#196826
+
+
+
+A deep belief network can be viewed as a stack of RBMs, where the hidden layer of one RBM is the visible layer of the one “above” it.
+
+A DBN is trained as follows: a) the first RBM is trained to re-construct is input as accurately as possible. b) the hidden layer of the first RBM is treated as the visible layer for the second and the second RBM is trained using the outputs from the first RBM.
+
+
+***** ALGORITHM *****
+https://medium.com/@MeTroFuN/python-mxnet-tutorial-1-restricted-boltzmann-machines-using-ndarray-f77578648ecf
+
+http://rocknrollnerd.github.io/ml/2015/07/18/general-boltzmann-machines.html
+http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/
+http://swoh.web.engr.illinois.edu/courses/IE598/handout/rbm.pdf
+
+***** EXAMPLE *****
+https://www.youtube.com/watch?v=wMb7cads0go
+https://lazyprogrammer.me/deep-learning-tutorial-part-33-deep-belief/
+https://www.youtube.com/watch?v=MD8qXWucJBY
+https://www.ki.tu-berlin.de/fileadmin/fg135/publikationen/Hebbo_2013_CDB.pdf
+http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/
+http://eric-yuan.me/rbm/
+https://www.youtube.com/watch?v=MD8qXWucJBY
+https://www.youtube.com/watch?v=wMb7cads0go
+
+***** SUMMARY *****
+- Unsupervised, layer-wise, greedy pre-training.
+
+(https://www.quora.com/What-is-the-difference-between-autoencoders-and-a-restricted-Boltzmann-machine)
+AEs are composed of an input, a hidden and an output layer. The output layer is a reconstruction of the input through the activations of the much fewer hidden nodes. It offers an elegant solution to dimensionality reduction and compression similar to PCA. You can omit the output layer after training and use the hidden layer as input features for downstream classification or another AE.
+RBMs are made out of an input and hidden layer. You're trying to find a stochastic representation of the input. By sampling from the hidden layer you can reproduce variants of samples encountered during training.
+The training of RBMs emerges through alternate sampling of both layers which is different from how you would train AEs, although back propagation could still be used later to fine tune the model. RBMs also seem more appropriate for recommender system applications as they can be used as means for collaborative filtering. AEs are less obvious tools for this use case.
+
+
+
+
+
+
+
+
+
+
+RBM:
+(https://deeplearning4j.org/restrictedboltzmannmachine)
+As you can see, on its forward pass, an RBM uses inputs to make predictions about node activations, or the probability of output given a weighted x: p(a|x; w).
+
+But on its backward pass, when activations are fed in and reconstructions, or guesses about the original data, are spit out, an RBM is attempting to estimate the probability of inputs x given activations a, which are weighted with the same coefficients as those used on the forward pass. This second phase can be expressed as p(x|a; w).
+
+Together, those two estimates will lead you to the joint probability distribution of inputs x and activations a, or p(x, a).
+
+Reconstruction does something different from regression, which estimates a continous value based on many inputs, and different from classification, which makes guesses about which discrete label to apply to a given input example.
+
+Reconstruction is making guesses about the probability distribution of the original input; i.e. the values of many varied points at once. This is known as generative learning, which must be distinguished from the so-called discriminative learning performed by classification, which maps inputs to labels, effectively drawing lines between groups of data points.
+
+One last point: You’ll notice that RBMs have two biases. This is one aspect that distinguishes them from other autoencoders. The hidden bias helps the RBM produce the activations on the forward pass (since biases impose a floor so that at least some nodes fire no matter how sparse the data), while the visible layer’s biases help the RBM learn the reconstructions on the backward pass.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(https://www.researchgate.net/figure/An-example-of-a-Deep-Belief-Network-with-two-layers_281450780)
+RBM’s are made up of two layers. Stacking multiple RBM’s is called a Deep Belief Network (DBN) as shown in figure 4. In a DBN the hidden layer of one RBM is connected to the visible layer of the next RBM, except for the last one. This provides the ability to train the layers of the network in stages, one RBM at a time using the CD algorithm. RBM’s are originally used for unsupervised learning. The usual approach for supervised learning is to connect an additional ANN that specializes in supervised problems. The idea is that the hidden units extract relevant features from the observations. These features can serve as input to another RBM. By stacking RBMs in this way, one can learn features in the expectation of arriving at a high-level representation. Hence, the features extracted by single or stacked RBMs can serve as input to a supervised learning algorithm. A common ANN used as a supervised learning system is the feedforward neural network (FNN). In this case, the hidden layer of the last connected RBM is the input of the FNN as shown in figure 5. The combination of RBM with FNN has been proposed with good results for classification [9] and time series prediction [4]. The use of DBN’s for time series prediction is relatively recent. Training a DBN requires a certain amount of practical experience to decide how to set the values of numerical parameters such as the learning rate, the momentum, the weight-cost, the initial values of the weights, the number of hidden units and the number of layers [19]. To determine those parameters, including a delay and interval between delays of the time series, Kuremoto et al. (2014) [4] proposed a DBN to predict time series. In their method a single output layer is fine tuned with Backpropagation (BP) and the parameters are found using the Particle Swarm Optimization (PSO) algorithm. The time series needed to be reconstructed as input data for the DBN are given as follows [4]:
+
+
+
+
+
+
+
+
+http://tsunami.io/blog-DBN_Digits.html
+For a Neural Net it is really fast. DBNs can be built out of layering Restricted Boltzmann Machines which are data-parallelizable (GPGPU friendly). By training the layers one at a time with fast algorithm ensures the weights are in a suitable starting position before using a slower algorithm for fine tuning.
+
+Deep Belief Networks work with unsupervised data (as well as supervised and semi-supervised). This is a big deal for many reasons. Firstly, the vast majority of data is unlabeled; by being able to consume this data DBNs are able to take advantage of more data which helps improve accuracy and prevent over fitting. Secondly, DBNs are able to learn their own features. Most of the work that goes into building a machine learning model goes into what is called Feature Engineering. This is the process of coming up with new features. Many of these features are extracted through hand built algorithms; for example edge detection for images, eye and nose detection for faces, phones/phonemes for speech. DBNs are able to discover many of these features by itself from the input data. This greatly reduces the amount of Feature Engineering work required freeing up the data scientist to search for new and higher level features, or go skiing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

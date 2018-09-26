@@ -1,0 +1,84 @@
+***** ABSTRACT *****
+
+
+
+
+
+***** ONCE UPON A TIME *****
+
+https://www.autonlab.org/tutorials/rl.html
+
+https://www.autonlab.org/tutorials/mdp.html
+
+https://stats.stackexchange.com/questions/241506/what-is-the-difference-between-markov-chains-and-markov-processes
+
+https://www.edx.org/course/machine-learning-columbiax-csmm-102x-0
+
+https://www.cs.cmu.edu/%7Etom/10701_sp11/slides/MDPs_RL_04_26_2011-ann.pdf
+
+https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=edf82c04-e170-4e8e-a55b-7de353225001
+
+https://www.cs.cmu.edu/%7Etom/10701_sp11/slides/MDPs_RL_04_28_2011.pdf
+
+https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ae14075d-069b-405e-b509-00b15da25726
+
+http://cs229.stanford.edu/section/cs229-hmm.pdf
+
+http://cs229.stanford.edu/notes/cs229-notes12.pdf
+
+
+
+(THIS IS GOOD ) https://math.stackexchange.com/questions/22982/what-is-the-difference-between-all-types-of-markov-chains
+
+
+***** “RL” *****
+
+
+https://courses.edx.org/courses/course-v1:ColumbiaX+CSMM.101x+1T2017/courseware/70f2dbe84e944ba485121acdd0a1fe47/49f0cef368f448688b18af90f321e5cb/?activate_block_id=block-v1%3AColumbiaX%2BCSMM.101x%2B1T2017%2Btype%40sequential%2Bblock%4049f0cef368f448688b18af90f321e5cb
+
+
+***** ALGORITHM *****
+
+https://www.analyticsvidhya.com/blog/2017/01/introduction-to-reinforcement-learning-implementation/
+
+
+***** EXAMPLE *****
+http://mnemstudio.org/path-finding-q-learning-tutorial.htm
+
+
+
+
+***** SUMMARY *****
+
+
+
+
+https://www.youtube.com/watch?v=lvoHnicueoE
+
+https://courses.edx.org/courses/course-v1:ColumbiaX+CSMM.101x+1T2017/course/
+
+https://www.youtube.com/watch?v=IXuHxkpO5E8&t=2171s
+
+https://www.autonlab.org/tutorials/rl.html
+
+https://www.autonlab.org/tutorials/mdp.html
+
+https://stats.stackexchange.com/questions/241506/what-is-the-difference-between-markov-chains-and-markov-processes
+
+https://www.edx.org/course/machine-learning-columbiax-csmm-102x-0
+
+https://www.cs.cmu.edu/%7Etom/10701_sp11/slides/MDPs_RL_04_26_2011-ann.pdf
+
+https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=edf82c04-e170-4e8e-a55b-7de353225001
+
+https://www.cs.cmu.edu/%7Etom/10701_sp11/slides/MDPs_RL_04_28_2011.pdf
+
+https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ae14075d-069b-405e-b509-00b15da25726
+
+http://cs229.stanford.edu/section/cs229-hmm.pdf
+
+http://cs229.stanford.edu/notes/cs229-notes12.pdf
+
+
+
+(THIS IS GOOD ) https://math.stackexchange.com/questions/22982/what-is-the-difference-between-all-types-of-markov-chains

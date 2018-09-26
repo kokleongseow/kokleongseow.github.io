@@ -1,0 +1,72 @@
+***** ABSTRACT *****
+Convolutional Neural Networks (ConvNets or CNNs) are a category of Neural Networks that have proven very effective in areas such as image recognition and classification. ConvNets have been successful in identifying faces, objects and traffic signs apart from powering vision in robots and self driving cars.
+A Convolutional Neural Network (CNN) is comprised of one or more convolutional layers (often with a subsampling step) and then followed by one or more fully connected layers as in a standard multilayer neural network. 
+Convolutional networks were inspired by biological processes[4] in which the connectivity pattern between neurons is inspired by the organization of the animal visual cortex. Individual cortical neurons respond to stimuli only in a restricted region of the visual field known as the receptive field. The receptive fields of different neurons partially overlap such that they cover the entire visual field.
+In machine learning, a convolutional neural network (CNN, or ConvNet) is a class of deep, feed-forward artificial neural networks that has successfully been applied to analyzing visual imagery.
+
+
+***** ONCE UPON A TIME *****
+
+
+
+
+***** “CNN” *****
+(https://www.youtube.com/watch?v=LodC7Zm3X8Q)
+(http://cs231n.github.io/convolutional-networks/)
+(https://www.youtube.com/watch?v=JiN9p5vWHDY)
+(https://medium.com/technologymadeeasy/the-best-explanation-of-convolutional-neural-networks-on-the-internet-fbb8b1ad5df8)
+(https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)
+()
+
+(https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)
+The architecture of a CNN is designed to take advantage of the 2D structure of an input image (or other 2D input such as a speech signal). This is achieved with local connections and tied weights followed by some form of pooling which results in translation invariant features. Another benefit of CNNs is that they are easier to train and have many fewer parameters than fully connected networks with the same number of hidden units.
+
+CNNs use a variation of multilayer perceptrons designed to require minimal preprocessing.[1] They are also known as shift invariant or space invariant artificial neural networks (SIANN), based on their shared-weights architecture and translation invariance characteristics.[2][3]
+
+CNNs use relatively little pre-processing compared to other image classification algorithms. This means that the network learns the filters that in traditional algorithms were hand-engineered. This independence from prior knowledge and human effort in feature design is a major advantage.
+
+
+***** ALGORITHM *****
+
+
+https://stats.stackexchange.com/questions/285745/convolutional-neural-networks-backpropagation
+
+http://www.simon-hohberg.de/2014/10/10/conv-net.html
+
+***** EXAMPLE *****
+
+(http://wiki.fast.ai/index.php/Lesson_4_Notes)
+(https://hashrocket.com/blog/posts/a-friendly-introduction-to-convolutional-neural-networks)
+(https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner%27s-Guide-To-Understanding-Convolutional-Neural-Networks/)
+(http://xrds.acm.org/blog/2016/06/convolutional-neural-networks-cnns-illustrated-explanation/)
+(http://ufldl.stanford.edu/tutorial/supervised/ExerciseConvolutionalNeuralNetwork/)
+(https://www.kdnuggets.com/2016/08/brohrer-convolutional-neural-networks-explanation.html)
+(https://pythonprogramming.net/convolutional-neural-network-cnn-machine-learning-tutorial/)
+
+If you know how to derive backpropagation in fully connected layers, vectorize all the variables, including input, output, weights, biases, deltas, replace the multiplication between weights and inputs with convolution operator for feedforward, and replace the multiplication between deltas and inputs with convolution operator for backpropagation.
+
+http://jefkine.com/general/2016/09/05/backpropagation-in-convolutional-neural-networks/
+https://pdfs.semanticscholar.org/5d79/11c93ddcb34cac088d99bd0cae9124e5dcd1.pdf
+https://becominghuman.ai/back-propagation-in-convolutional-neural-networks-intuition-and-code-714ef1c38199
+https://www.slideshare.net/kuwajima/cnnbp
+https://grzegorzgwardys.wordpress.com/2016/04/22/8/
+
+
+***** SUMMARY *****
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://setosa.io/ev/image-kernels/
+This book is about a solution to these more intuitive problems. This solution isto allow computers to learn from experience and understand the world in terms of ahierarchy of concepts, with each concept deﬁned in terms of its relation to simplerconcepts. By gathering knowledge from experience, this approach avoids the needfor human operators to formally specify all of the knowledge that the computerneeds. The hierarchy of concepts allows the computer to learn complicated conceptsby building them out of simpler ones. If we draw a graph showing how these concepts are built on top of each other, the graph is deep, with many layers. Forthis reason, we call this approach to AI deep learning.
+The idea of learning the right representation for the data provides one perspec-tive on deep learning. Another perspective on deep learning is that depth allows thecomputer to learn a multi-step computer program. Each layer of the representationcan be thought of as the state of the computer’s memory after executing anotherset of instructions in parallel. Networks with greater depth can execute moreinstructions in sequence. Sequential instructions oﬀer great power because later instructions can refer back to the results of earlier instructions. According to thisview of deep learning, not all of the information in a layer’s activations necessarilyencodes factors of variation that explain the input. The representation also storesstate information that helps to execute a program that can make sense of the input.This state information could be analogous to a counter or pointer in a traditionalcomputer program. It has nothing to do with the content of the input speciﬁcally,but it helps the model to organize its processing

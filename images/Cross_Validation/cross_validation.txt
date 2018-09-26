@@ -1,0 +1,173 @@
+5-fold cross validation
+
+ https://www.quora.com/What-is-an-intuitive-explanation-of-cross-validation
+https://stats.stackexchange.com/questions/1826/cross-validation-in-plain-english
+
+http://cs229.stanford.edu/notes/cs229-notes5.pdf
+
+
+
+Training set is a set of examples used for learning a model (e.g., a classification model).
+
+Validation set is a set of examples that cannot be used for learning the model but can help tune model parameters (e.g., selecting K in KNN). Validation helps control overfitting.
+
+Test set is used to assess the performance of the final model and provide an estimation of the test error.
+
+Note: Never use the test set in any way to further tune the parameters or revise the model.
+
+
+
+
+
+
+
+Learning the parameters of a prediction function and testing it on the same data is a methodological mistake: a model that would just repeat the labels of the samples that it has just seen would have a perfect score but would fail to predict anything useful on yet-unseen data. This situation is called overfitting. To avoid it, it is common practice when performing a (supervised) machine learning experiment to hold out part of the available data as a test set
+
+
+
+
+
+
+
+Once you have built a model, how can you be sure it is making good predictions? The most important test is whether the model is accurate “out of sample”, which is when the model is making predictions for data it has never seen before. This is important because eventually you will want to use the model to make new decisions, and you need to know it can do that reliably. However, it can be costly to run tests in the field, and you can be a lot more efficient by using the data you already have to simulate an “out of sample” test of prediction accuracy. This is most commonly done in machine learning with a process called “cross-validation”.
+
+Imagine we are building a prediction model using data on 10,000 past customers and we want to know how accurate the predictions will be for future customers. A simple way to estimate that accuracy is to randomly split the sample into two parts: a “training set” of 9,000 to build the model and a “test set” of 1,000, that is initially put aside. Once we’ve finished building a model with the training set, we can see how well the model predicts the outcomes in the test set, as a dry run. The most important thing is that model never sees the test set outcomes until after the model is built. This ensures that the test set is truly “held-out” data. If you don’t keep a clear partition between these two, you will overestimate how good your model actually is, and this can be a very costly mistake to make.
+
+
+
+
+
+
+
+
+
+
+
+When evaluating different settings (“hyperparameters”) for estimators, such as the C setting that must be manually set for an SVM, there is still a risk of overfitting on the test set because the parameters can be tweaked until the estimator performs optimally. This way, knowledge about the test set can “leak” into the model and evaluation metrics no longer report on generalization performance. To solve this problem, yet another part of the dataset can be held out as a so-called “validation set”: training proceeds on the training set, after which evaluation is done on the validation set, and when the experiment seems to be successful, final evaluation can be done on the test set.
+
+However, by partitioning the available data into three sets, we drastically reduce the number of samples which can be used for learning the model, and the results can depend on a particular random choice for the pair of (train, validation) sets.
+
+A solution to this problem is a procedure called cross-validation (CV for short). A test set should still be held out for final evaluation, but the validation set is no longer needed when doing CV. In the basic approach, called k-fold CV, the training set is split into k smaller sets (other approaches are described below, but generally follow the same principles). The following procedure is followed for each of the k “folds”:
+
+A model is trained using k-1 of the folds as training data;
+the resulting model is validated on the remaining part of the data (i.e., it is used as a test set to compute a performance measure such as accuracy).
+The performance measure reported by k-fold cross-validation is then the average of the values computed in the loop. This approach can be computationally expensive, but does not waste too much data (as it is the case when fixing an arbitrary test set), which is a major advantage in problem such as inverse inference where the number of samples is very small.
+
+
+
+
+
+
+
+
+
+
+
+I need to test how well my model will work on new data. I can't use the data I trained it on, as it may be overfit to that data. So, I could take part of my data, hold it out, train on the rest, and see how well it performs on the set I held out. This is a decent approach, but now I have a bunch of data I can't use to train, and if I trained on different data my performance may be different. To counteract this, you use cross validation. Instead of just holding out one part of the data to train on, you hold out different parts. for each part, you train on the rest, and evaluate the set you held out. Now you have effectively used all of your data for testing AND training, without testing on data you trained on.
+
+
+
+Cross validation is a method for estimating the prediction accuracy of a model.
+
+One way to evaluate a model is to see how well it predicts the data used to fit the model. But this is too optimistic -- a model tailored to a particular data set will make better predictions on that data set than on new data.
+
+Another way is to hold out some data and fit the model using the rest. Then you can test your accuracy on the holdout data.  But the held out data is "wasted" from the point of view of building the model. If you have huge amounts of data, so holding some data out won't make the model much worse, then simply holding out a single set might be fine.
+
+Cross validation does something like this but tries to make more efficient use of the data: you divide the data into (say) 10 equal parts. Then successively hold out each part and fit the model using the rest. This gives you 10 estimates of prediction accuracy which can be combined into an overall measure.
+
+ 
+ 
+ 
+ 
+1. Training set is a set of examples used for learning a model (e.g. a classification model).
+2. A validation set is a set of examples that cannot be used for learning the model but can help tune the model parameters. Validation helps control overfitting.
+3. Test set is used to assess the performance of the final model and provide an estimation of the test error.
+ 
+ 
+ 
+***NEVER USE THE TEST SET TO FINE TUNE YOUR PARAMETERS***
+ 
+ 
+ 
+Most machine learning algorithms have several settings that we can use to control the behavior of the learning algorithm. These settings are called hyperparameters. The values of hyperparameters are not adapted by the learning algorithm itself (though we can design a nested learning procedure where one learning algorithm learns the best hyperparameters for another learning algorithm). In the polynomial regression example we saw in Fig. 5.2, there is a single hyper- parameter: the degree of the polynomial, which acts as a capacity hyperparameter. The λ value used to control the strength of weight decay is another example of a hyperparameter.
+
+Sometimes a setting is chosen to be a hyperparameter that the learning algo- rithm does not learn because it is difficult to optimize. More frequently, we do not learn the hyperparameter because it is not appropriate to learn that hyper- parameter on the training set. This applies to all hyperparameters that control model capacity. If learned on the training set, such hyperparameters would always choose the maximum possible model capacity, resulting in overfitting (refer to Fig. 5.3).
+To solve this problem, we need a validation set of examples that the training algorithm does not observe. Earlier we discussed how a held-out test set, composed of examples coming from the same distribution as the training set, can be used to estimate the generalization error of a learner, after the learning process has completed. It is important that the test examples are not used in any way to make choices about the model, including its hyperparameters. For this reason, no example from the test set can be used in the validation set. Therefore, we always construct the validation set from the training data. Specifically, we split the training data into two disjoint subsets.
+One of these subsets is used to learn the parameters. The other subset is our validation set, used to estimate the generalization error during or after training, allowing for the hyperparameters to be updated accordingly. The subset of data used to learn the parameters is still typically called the training set, even though this may be confused with the larger pool of data used for the entire training process. The subset of data used to guide the selection of hyperparameters is called the validation set. Typically, one uses about 80% of the training data for training and 20% for validation. Since the validation set is used to “train” the hyperparameters, the validation set error will underestimate the generalization error, though typically by a smaller amount than the training error. After all hyperparameter optimization is complete, the generalization error may be estimated using the test set.
+
+
+
+Of course, with cross-validation, the number of folds to use (k-fold cross-validation, right?), the value of k is an important decision. The lower the value, the higher the bias in the error estimates and the less variance. Conversely, when k is set equal to the number of instances, the error estimate is then very low in bias but has the possibility of high variance. The bias-variance tradeoff is clearly important to understand for even the most routine of statistical evaluation methods, such as k-fold cross-validation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Recall that building a prediction or classification model requires a labeled data set. One might be tempted to say that performance of the model on the labeled data set (performance = accuracy/error rate or residual sum of squares) it was given is a good indication of performance on future data. However, this may not be true. A good model needs to generalize beyond the given data set to be useful for predicting/classifying future data.
+
+One way to validate a model is to split the labeled data set into two subsets: a training data set and a testing data set. The training data set will be used to build the model. The testing data set will be used to test the model. However, it’s not clear how to dived the labeled dataset. We want as much training data as possible to build a good model, but we also want as much testing data as possible to come up with an accurate estimate of its performance.
+
+K-fold cross-validation is a solution to the above dilemma. It randomly divides the labeled dataset into k subsets, called folds. Then, it works as follows:
+
+for i = 1 to k
+Build a model using all but the k-th fold
+Test the model on the k-th fold and record the error rate or residual sum of squares
+end for
+Return the average of the error rates or residual sum of squares obtained in line 3
+Special case: if k=the size of the labeled dataset, we get Leave-one-out cross-validation. Every iteration of the for-loop in line 1 “leaves one data point out” for testing.
+
+Note: ultimately, we can use the entire labeled data set to build the model. Cross-validation is only used to calculate the goodness of the model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***TALK ABOUT REGULARIZATION***
+Discussed here is Cross Validation and Bias/Variance. This is more about making your current algorithm perform better. We adjust algorithms based on their parameters. (K-Means, SVM, clustering). Thats what cross validation does. Given 1000 trainign examples, I want to find the most optimal parameter to give the best accuracy. Using cross validation I i run thought all the data with different parameters and get the best answer. And Bias/Variance is about overfitting or not fitting your examples well enough.
+
+Think of CV like this. You’re a basketball player working on your shot. The parameters are your elbow placement. So you shoot from the free-throw line and the 3 point line, all middle. You constantly try each shot with different elbow placements. When you go 100%, you then try that same elbow placement form the wing (Being your testing set).
+Bias and Variance can be thought of like this. To much variance leads to overfitting the data. Its analogous to a a person learning one skill and not adapting to the market they are in. They are a tradesmen. They do really well in their extremely niche craft, the issue is, his/her niche doesn’t generalize well and performs poorly in the real world. Bias is the exact opposite. This person is a jack-of-all trades and doesn’t master any craft, also performing poorly in the real world. (CV can also be a way to get out of bias variance so think of an apology for that as well).
+
+abstract
+
+once upon a time...
+
+Cross Validation
+
+Algorithm
+
+Example
+
+SUMMARY/DISCUSSION
+
+PYTHON CODE
+
+COMING SOON...
+
+[wpforms id="1712"]
